@@ -3,6 +3,7 @@
 *.ahk
 **/obj/
 **/bin/
+/resources/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #

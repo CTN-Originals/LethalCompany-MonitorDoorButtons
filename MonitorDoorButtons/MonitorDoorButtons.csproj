@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>MonitorDoorButtons</AssemblyName>
-    <Description>My first plugin</Description>
-    <Version>1.0.0</Version>
+    <Description>Add 2 more buttons tho the top left of the main monitor in the front of the ship to open/close the door while monitoring.</Description>
+    <Version>0.0.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

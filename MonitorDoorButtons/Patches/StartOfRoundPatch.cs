@@ -6,6 +6,7 @@ using TMPro;
 using GameNetcodeStuff;
 using System.ComponentModel;
 using UnityEngine.EventSystems;
+using System;
 
 namespace MonitorDoorButtons.Patches
 {
@@ -91,8 +92,9 @@ namespace MonitorDoorButtons.Patches
 			MonitorDoorPanel.name = "MonitorDoorPanel";
 			MonitorDoorPanel.localPosition = new Vector3(-0.2f, -1.7f, 0.15f);
 			MonitorDoorPanel.localEulerAngles = new Vector3(90f, 90f, 0f);
-			Plugin.Console.LogInfo($"StartOfRound.CreateMonitorDoorPanel() created MonitorDoorPanel: {MonitorDoorPanel.name}");
+			Plugin.Console.LogInfo($"StartOfRound.CreateMonitorDoorPanel() created: {MonitorDoorPanel.name}");
 
+			//? Get the references for the new buttons
 			MonitorStartButton = MonitorDoorPanel.Find("StartButton").Find("Cube (2)");
 			MonitorStopButton = MonitorDoorPanel.Find("StopButton").Find("Cube (3)");
 			if (MonitorStartButton == null || MonitorStopButton == null) {
@@ -100,26 +102,25 @@ namespace MonitorDoorButtons.Patches
 				return;
 			}
 
-			// InteractTrigger trigger = new InteractTrigger();
-			// trigger.onInteract = CustomTrigger(MonitorStartButton, "Open");
-
 			MonitorStartButtonTrigger = MonitorStartButton.GetComponent<InteractTrigger>();
-			MonitorStartButtonTrigger.onInteract = DoorStartButtonTrigger.onInteract;
-			// MonitorStartButtonTrigger.onInteract = CustomTrigger(DoorStartButtonTrigger, MonitorStartButton, "Open");
-			
 			MonitorStopButtonTrigger = MonitorStopButton.GetComponent<InteractTrigger>();
-			MonitorStopButtonTrigger.onInteract = DoorStopButtonTrigger.onInteract;
-			// MonitorStopButtonTrigger.onInteract = CustomTrigger(DoorStopButtonTrigger, MonitorStopButton, "Close");
 
+			//+ Fix button animation and sound by by calling the right trigger on this object
+			MonitorStartButtonTrigger.onInteract.AddListener((player) => {
+				CustomTrigger(player, DoorStartButtonTrigger, MonitorStartButton, "Open");
+			});
+			MonitorStopButtonTrigger.onInteract.AddListener((player) => {
+				CustomTrigger(player, DoorStopButtonTrigger, MonitorStopButton, "Close");
+			});
+
+			//? find the meter text for later use in UpdatePatch()
 			MonitorDoorPanelMeter = MonitorDoorPanel.Find("ElevatorPanelScreen/Image/meter").GetComponent<TextMeshProUGUI>();
 		}
 
-		private static InteractEvent CustomTrigger(InteractTrigger originalTrigger, Transform trigger, string state = "Open") {
+		private static void CustomTrigger(PlayerControllerB sender, InteractTrigger originalTrigger, Transform trigger, string state = "Open") {
+			originalTrigger.onInteract.Invoke(sender);
 			trigger.GetComponent<AnimatedObjectTrigger>().triggerAnimator.SetTrigger(state + "Door");
-
 			Plugin.Console.LogMessage($"StartOfRound.CustomTrigger() called for {trigger.name} with state {state}");
-
-			return originalTrigger.onInteract;
 		}
 	}
 }

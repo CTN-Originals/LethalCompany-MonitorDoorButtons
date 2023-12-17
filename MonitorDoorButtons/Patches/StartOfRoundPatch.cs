@@ -1,12 +1,10 @@
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
 
 using TMPro;
 using GameNetcodeStuff;
-using System.ComponentModel;
-using UnityEngine.EventSystems;
-using System;
+
+using MonitorDoorButtons.Utilities;
 
 namespace MonitorDoorButtons.Patches
 {
@@ -31,7 +29,7 @@ namespace MonitorDoorButtons.Patches
 		[HarmonyPostfix]
 		[HarmonyPatch("Start")]
 		private static void StartPatch() {
-			Plugin.Console.LogInfo($"StartOfRound.Start() called");
+			Console.LogInfo($"StartOfRound.Start() called");
 			GetObjectReferences();
 			if (MonitorWall == null || DoorPanel == null) return;
 			CreateMonitorDoorPanel();
@@ -61,7 +59,7 @@ namespace MonitorDoorButtons.Patches
 		private static void GetObjectReferences() {
 			MonitorWall = GameObject.Find("Environment/HangarShip/ShipModels2b/MonitorWall").transform;
 			if (MonitorWall == null) {
-				Plugin.Console.LogError($"StartOfRound.GetMonitorButton() could not find MonitorWall");
+				Console.LogError($"StartOfRound.GetMonitorButton() could not find MonitorWall");
 				return;
 			}
 			
@@ -69,15 +67,15 @@ namespace MonitorDoorButtons.Patches
 			Transform DoorStartButton = DoorPanel.Find("StartButton").Find("Cube (2)");
 			Transform DoorStopButton = DoorPanel.Find("StopButton").Find("Cube (3)");
 			if (DoorPanel == null || DoorStartButton == null || DoorStopButton == null) {
-				Plugin.Console.LogError($"StartOfRound.GetDoorPanel() could not find HangarDoorButtonPanel references");
+				Console.LogError($"StartOfRound.GetDoorPanel() could not find HangarDoorButtonPanel references");
 				return;
 			}
 			DoorStartButtonTrigger = DoorStartButton.GetComponent<InteractTrigger>();
 			DoorStopButtonTrigger = DoorStopButton.GetComponent<InteractTrigger>();
 			DoorPanelMeter = DoorPanel.Find("ElevatorPanelScreen/Image/meter").GetComponent<TextMeshProUGUI>();
 
-			Plugin.Console.LogInfo($"StartOfRound.GetDoorPanel() found HangarDoorButtonPanel: {DoorPanel.name}");
-			Plugin.Console.LogInfo($"StartOfRound.GetMonitorButton() found MonitorWall: {MonitorWall.name}");
+			// Plugin.Console.LogInfo($"StartOfRound.GetDoorPanel() found HangarDoorButtonPanel: {DoorPanel.name}");
+			// Plugin.Console.LogInfo($"StartOfRound.GetMonitorButton() found MonitorWall: {MonitorWall.name}");
 		}
 
 		//| Transform
@@ -85,20 +83,20 @@ namespace MonitorDoorButtons.Patches
 			//> EulerAngles (90 90 0)
 		private static void CreateMonitorDoorPanel() {
 			if (MonitorWall.Find("MonitorDoorPanel") != null) {
-				Plugin.Console.LogError($"StartOfRound.CreateMonitorDoorPanel() MonitorDoorPanel already exists");
+				Console.LogError($"StartOfRound.CreateMonitorDoorPanel() MonitorDoorPanel already exists");
 				return;
 			}
 			MonitorDoorPanel = GameObject.Instantiate(DoorPanel, MonitorWall);
 			MonitorDoorPanel.name = "MonitorDoorPanel";
 			MonitorDoorPanel.localPosition = new Vector3(-0.2f, -1.7f, 0.15f);
 			MonitorDoorPanel.localEulerAngles = new Vector3(90f, 90f, 0f);
-			Plugin.Console.LogInfo($"StartOfRound.CreateMonitorDoorPanel() created: {MonitorDoorPanel.name}");
+			Console.LogInfo($"StartOfRound.CreateMonitorDoorPanel() created: {MonitorDoorPanel.name}");
 
 			//? Get the references for the new buttons
 			MonitorStartButton = MonitorDoorPanel.Find("StartButton").Find("Cube (2)");
 			MonitorStopButton = MonitorDoorPanel.Find("StopButton").Find("Cube (3)");
 			if (MonitorStartButton == null || MonitorStopButton == null) {
-				Plugin.Console.LogError($"StartOfRound.CreateMonitorDoorPanel() could not find MonitorDoorPanel references");
+				Console.LogError($"StartOfRound.CreateMonitorDoorPanel() could not find MonitorDoorPanel references");
 				return;
 			}
 
@@ -120,7 +118,7 @@ namespace MonitorDoorButtons.Patches
 		private static void CustomTrigger(PlayerControllerB sender, InteractTrigger originalTrigger, Transform trigger, string state = "Open") {
 			originalTrigger.onInteract.Invoke(sender);
 			trigger.GetComponent<AnimatedObjectTrigger>().triggerAnimator.SetTrigger(state + "Door");
-			Plugin.Console.LogMessage($"StartOfRound.CustomTrigger() called for {trigger.name} with state {state}");
+			Console.LogMessage($"StartOfRound.CustomTrigger() called for {trigger.name} with state {state}");
 		}
 	}
 }

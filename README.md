@@ -1,4 +1,4 @@
-# MonitorDoorButtons [BETA]
+# MonitorDoorButtons
 Add the door button panel to the main monitor in the front of the ship to open/close the door while monitoring.
 
 ![Image](https://i.imgur.com/T3k9fjX.png)
@@ -11,10 +11,6 @@ Add the door button panel to the main monitor in the front of the ship to open/c
 4. Launch the game and never wonder where you are aiming again!
 ### Thunderstore
 Install using the Thunderstore Mod Manager: https://thunderstore.io/c/lethal-company/p/CTNOriginals/MonitorDoorButtons/
-
-## Known issues
-- Button press animation is not working.
-- Button press sound is not working.
 
 ## Changelog
 See [CHANGELOG.md](https://github.com/CTN-Originals/LethalCompany-MonitorDoorButtons/blob/main/CHANGELOG.md) for the full changelog.

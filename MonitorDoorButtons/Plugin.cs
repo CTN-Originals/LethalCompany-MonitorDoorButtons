@@ -9,18 +9,14 @@ namespace MonitorDoorButtons
     {
 		private static readonly Harmony harmony = new Harmony(PluginInfo.PLUGIN_GUID);
 
-		public static ManualLogSource CLog = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_NAME);
+		public static ManualLogSource CLog;
 
-		public static Plugin Instance { get; private set; }
-
-        private void Awake()
-        {
-			if (Instance == null) Instance = this;
-
-            // Plugin startup logic
-            CLog.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+		private void Awake() {
+			// Plugin startup logic
+			CLog = Logger;
+			CLog.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
 			harmony.PatchAll();
-        }
-    }
+		}
+	}
 }

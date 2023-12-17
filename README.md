@@ -1,6 +1,8 @@
 # MonitorDoorButtons [BETA]
 Add the door button panel to the main monitor in the front of the ship to open/close the door while monitoring.
 
+![Image](https://i.imgur.com/T3k9fjX.png)
+
 ## Installation
 ### Manual
 1. Download the latest version from the [releases page](https://github.com/CTN-Originals/LethalCompany-MonitorDoorButtons/releases).

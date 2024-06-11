@@ -12,5 +12,8 @@ Add the door button panel to the main monitor in the front of the ship to open/c
 ### Thunderstore
 Install using the Thunderstore Mod Manager: https://thunderstore.io/c/lethal-company/p/CTNOriginals/MonitorDoorButtons/
 
+## Contributors
+- [Korgen1](https://github.com/Korgen1) - [1.1.0](https://github.com/CTN-Originals/LethalCompany-MonitorDoorButtons/pull/1)
+
 ## Changelog
 See [CHANGELOG.md](https://github.com/CTN-Originals/LethalCompany-MonitorDoorButtons/blob/main/CHANGELOG.md) for the full changelog.z

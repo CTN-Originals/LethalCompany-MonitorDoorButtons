@@ -5,6 +5,7 @@ using TMPro;
 using GameNetcodeStuff;
 
 using MonitorDoorButtons.Utilities;
+using System.Collections;
 
 namespace MonitorDoorButtons.Patches
 {
@@ -90,6 +91,7 @@ namespace MonitorDoorButtons.Patches
 			MonitorDoorPanel.name = "MonitorDoorPanel";
 			MonitorDoorPanel.localPosition = new Vector3(-0.2f, -1.7f, 0.15f);
 			MonitorDoorPanel.localEulerAngles = new Vector3(90f, 90f, 0f);
+
 			Console.LogInfo($"StartOfRound.CreateMonitorDoorPanel() created: {MonitorDoorPanel.name}");
 
 			//? Get the references for the new buttons
@@ -99,6 +101,34 @@ namespace MonitorDoorButtons.Patches
 				Console.LogError($"StartOfRound.CreateMonitorDoorPanel() could not find MonitorDoorPanel references");
 				return;
 			}
+
+			if (Plugin.GetConfig(1) == true){
+				//GI Compat on
+				//delete the panel
+				ArrayList ignore = ["StartButton","StopButton","Audio"];
+				for (int i=0; i < MonitorDoorPanel.childCount; i++) {
+					GameObject child = MonitorDoorPanel.GetChild(i).gameObject;
+					if(!ignore.Contains(child.name)) {
+						UnityEngine.Object.Destroy(child);
+					}
+				}
+				UnityEngine.Object.Destroy(MonitorDoorPanel.GetComponent<UnityEngine.MeshRenderer>());
+				//fix rotation, position and scale
+
+				MonitorDoorPanel.localRotation = new Quaternion(0.5417f, 0.4545f, -0.4545f, 0.5417f);
+
+				if (Plugin.GetConfig(2) == true) {
+					//bigbuttons true
+					MonitorDoorPanel.transform.localPosition = new Vector3(-0.23f, -1.6f, -0.17f);
+				} else {
+					//bigbuttons null or false
+					MonitorDoorPanel.transform.localPosition = new Vector3(-0.23f, -1.8f, -0.145f);
+					MonitorDoorPanel.transform.localScale = new Vector3(-.75f, -.75f, -.75f);
+					
+				} 
+				
+			}
+
 
 			MonitorStartButtonTrigger = MonitorStartButton.GetComponent<InteractTrigger>();
 			MonitorStopButtonTrigger = MonitorStopButton.GetComponent<InteractTrigger>();

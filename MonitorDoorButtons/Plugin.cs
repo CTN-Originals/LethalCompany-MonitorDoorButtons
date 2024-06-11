@@ -1,10 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using BepInEx.Configuration;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace MonitorDoorButtons
 {

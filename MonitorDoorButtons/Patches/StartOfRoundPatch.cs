@@ -5,7 +5,6 @@ using TMPro;
 using GameNetcodeStuff;
 
 using MonitorDoorButtons.Utilities;
-using System.Collections.Generic;
 using System.Collections;
 
 namespace MonitorDoorButtons.Patches
